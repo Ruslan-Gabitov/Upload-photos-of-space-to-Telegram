@@ -2,7 +2,6 @@ import requests
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-from requests.models import Response
 from urllib.parse import urlsplit
 import datetime
 
