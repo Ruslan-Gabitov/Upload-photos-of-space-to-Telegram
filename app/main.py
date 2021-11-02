@@ -20,12 +20,13 @@ def create_folder(name_folder):
     return name_folder
 
 
-def upload_images(urls, path):
+def upload_images(urls, path, name_image):
+    create_folder(path)
     for id, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
         filename_extension = get_filename_extension(url)
-        with open(f'{path}{id+1}{filename_extension}', 'wb') as file:
+        with open(f'{path}/{name_image}{id+1}{filename_extension}', 'wb') as file:
             file.write(response.content)
 
 
@@ -76,17 +77,25 @@ def publish_images_to_channel(chat_id, path, time_sleep=86400):
 
 if __name__ == '__main__':
     load_dotenv()
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--create folder', help='Создаст папку для сохранения файлов')
+    fun = {'spacex': fetch_spacex_last_launch,
+            'nasa': fetch_nasa_last_launch,
+            'nasa_epic': fetch_nasa_epic_last_launch
+    }
+    parser = argparse.ArgumentParser(description='Программа дает возможность скачть фото \
+        космоса с сайтов NASA и Spacex, а так же сделать автопостинг в ваш телеграм канал')
 
-    create_folder('images')
+    parser.add_argument('down', type=str, help='Выберете чьи фото скачать и укажите в качестве \
+        аргумента: spacex, nasa, nasa_epic ?')
+    args = parser.parse_args()
 
-    upload_images(urls=fetch_spacex_last_launch(flight_number=85),
-                  path='images/spacex_')
+    print(args.down)
 
-    upload_images(urls=fetch_nasa_last_launch(
-        image_namber=30), path='images/nasa_')
+    upload_images(urls=fun[args.down](), path='images', name_image='spacex_')
 
-    upload_images(urls=fetch_nasa_epic_last_launch(), path='images/epic_')
+    # upload_images(urls=fetch_nasa_last_launch(),
+    #               name_folder='images', name_image='nasa_')
 
-    publish_images_to_channel(time_sleep=3, path='images', chat_id='@cosmo_mo')
+    # upload_images(urls=fetch_nasa_epic_last_launch(),
+    #               name_folder='images', name_image='epic_')
+
+    # publish_images_to_channel(time_sleep=3, path='images', chat_id='@cosmo_mo')
