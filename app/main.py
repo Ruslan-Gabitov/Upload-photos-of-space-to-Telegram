@@ -75,25 +75,19 @@ def publish_images_to_channel(chat_id, path, time_sleep=86400):
 
 if __name__ == '__main__':
     load_dotenv()
-    fun = {'spacex': fetch_spacex_last_launch,
-            'nasa': fetch_nasa_last_launch,
-            'nasa_epic': fetch_nasa_epic_last_launch
-    }
-    parser = argparse.ArgumentParser(description='Программа дает возможность скачть фото \
-        космоса с сайтов NASA и Spacex, а так же сделать автопостинг в ваш телеграм канал')
+    try:
+        links_spacex = fetch_spacex_last_launch(flight_number=85)
+        links_nasa = fetch_nasa_last_launch(image_namber=10)
+        links_nasa_epic = fetch_nasa_epic_last_launch()
+    except IndexError:
+        print('Что-то пошло не так =(, попробуй еще раз.')
+    except ConnectionError:
+        print('Ошибка соединения с сервером, попробуй еще раз.')
+    
+    full_list_links = links_spacex + links_nasa + links_nasa_epic
 
-    parser.add_argument('down', type=str, help='Выберете чьи фото скачать и укажите в качестве \
-        аргумента: spacex, nasa, nasa_epic ?')
-    args = parser.parse_args()
-
-    print(args.down)
-
-    upload_images(urls=fun[args.down](), path='images', name_image='spacex_')
-
-    # upload_images(urls=fetch_nasa_last_launch(),
-    #               name_folder='images', name_image='nasa_')
-
-    # upload_images(urls=fetch_nasa_epic_last_launch(),
-    #               name_folder='images', name_image='epic_')
-
-    # publish_images_to_channel(time_sleep=3, path='images', chat_id='@cosmo_mo')
+    upload_images(urls=full_list_links, path='images', name_image='image_space_')
+    try:
+        publish_images_to_channel(chat_id='@cosmo_mo', path='images', time_sleep=3)
+    except ConnectionError:
+        print('Ошибка соединения с сервером, попробуй еще раз.')
