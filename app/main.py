@@ -71,7 +71,6 @@ def publish_images_to_channel(chat_id, path, time_sleep=86400):
         bot.send_document(chat_id=chat_id, document=open(
             f'images/{img}', 'rb'), caption='')
         time.sleep(time_sleep)
-        print(f'Фото {img} опубликованно!')
 
 
 if __name__ == '__main__':
