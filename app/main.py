@@ -6,8 +6,7 @@ from urllib.parse import urlsplit
 import datetime
 import telegram
 import time
-import argparse
-
+import random
 
 def get_filename_extension(urls):
     url = urlsplit(urls)
