@@ -14,9 +14,8 @@ def get_filename_extension(urls):
     return filename_extension
 
 
-def create_folder(name_folder):
-    Path(name_folder).mkdir(parents=True, exist_ok=True)
-    return name_folder
+def create_folder(path):
+    Path(path).mkdir(parents=True, exist_ok=True)
 
 
 def upload_images(urls, path, name_image):
