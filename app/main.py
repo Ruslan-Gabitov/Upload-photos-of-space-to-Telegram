@@ -33,7 +33,8 @@ def fetch_spacex_last_launch(flight_number=85):
     params = {'flight_number': flight_number}
     response = requests.get(url, params=params)
     response.raise_for_status()
-    return response.json()[0]['links']['flickr_images']
+    links = response.json()[0]['links']['flickr_images']
+    return links
 
 
 def fetch_nasa_last_launch(image_namber=30):
