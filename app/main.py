@@ -60,7 +60,7 @@ def fetch_nasa_epic_last_launch():
     for namedate in response.json():
         image = namedate['image']
         links.append(
-            f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={NASA_TOKEN}')
+            f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={os.getenv("NASA_TOKEN")}')
     return links
 
 
