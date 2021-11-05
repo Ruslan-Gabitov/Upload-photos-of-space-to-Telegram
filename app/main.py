@@ -88,6 +88,7 @@ if __name__ == '__main__':
 
     upload_images(urls=full_list_links, path='images', name_image='image_space_')
     try:
-        publish_images_to_channel(chat_id='@cosmo_mo', path='images', time_sleep=3)
+        publish_images_to_channel(chat_id=os.getenv('CHAT_ID'), path='images', time_sleep=int(os.getenv('TIME_SLEEP')))
     except ConnectionError:
         print('Ошибка соединения с сервером, попробуй еще раз.')
+
