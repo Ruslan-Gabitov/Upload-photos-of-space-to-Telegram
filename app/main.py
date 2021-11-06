@@ -73,20 +73,24 @@ def publish_images_to_channel(token, chat_id, path, time_sleep=86400):
 
 if __name__ == '__main__':
     load_dotenv()
-    try:
-        links_spacex = fetch_spacex_last_launch(flight_number=85)
-        links_nasa = fetch_nasa_last_launch(image_namber=10)
-        links_nasa_epic = fetch_nasa_epic_last_launch()
-    except IndexError:
-        print('Что-то пошло не так =(, попробуй еще раз.')
-    except ConnectionError:
-        print('Ошибка соединения с сервером, попробуй еще раз.')
+    nasa_token = os.getenv('NASA_TOKEN')
+    tg_token = os.getenv('TG_TOKEN')
+    time_sleep = os.getenv('TIME_SLEEP')
+    chat_id = os.getenv('CHAT_ID')
+
+    # try:
+    #     links_spacex = fetch_spacex_last_launch(flight_number=85)
+    #     links_nasa = fetch_nasa_last_launch(nasa_token, image_namber=5)
+    #     links_nasa_epic = fetch_nasa_epic_last_launch(nasa_token)
+    # except IndexError:
+    #     print('Что-то пошло не так =(, попробуй еще раз.')
+    # except ConnectionError:
+    #     print('Ошибка соединения с сервером, попробуй еще раз.')
     
-    full_list_links = links_spacex + links_nasa + links_nasa_epic
+    # full_list_links = links_spacex + links_nasa + links_nasa_epic
 
-    upload_images(urls=full_list_links, path='images', name_image='image_space_')
-    try:
-        publish_images_to_channel(chat_id=os.getenv('CHAT_ID'), path='images', time_sleep=int(os.getenv('TIME_SLEEP')))
-    except ConnectionError:
-        print('Ошибка соединения с сервером, попробуй еще раз.')
-
+    # upload_images(urls=full_list_links, path='images', name_image='image_space_')
+    # try:
+    publish_images_to_channel(tg_token, chat_id=chat_id, path='images', time_sleep=int(time_sleep))
+    # except ConnectionError:
+    #     print('Ошибка соединения с сервером, попробуй еще раз.')
