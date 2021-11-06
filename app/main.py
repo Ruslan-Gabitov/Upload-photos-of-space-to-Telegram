@@ -37,10 +37,9 @@ def fetch_spacex_last_launch(flight_number=85):
     return links
 
 
-def fetch_nasa_last_launch(image_namber=30):
-    NASA_TOKEN = os.getenv('NASA_TOKEN')
+def fetch_nasa_last_launch(token, image_namber=30):
     url = 'https://api.nasa.gov/planetary/apod'
-    params = {'api_key': NASA_TOKEN, 'count': image_namber}
+    params = {'api_key': token, 'count': image_namber}
     response = requests.get(url, params=params)
     response.raise_for_status()
     urls = response.json()
@@ -48,10 +47,9 @@ def fetch_nasa_last_launch(image_namber=30):
     return links
 
 
-def fetch_nasa_epic_last_launch(number_links=1):
-    NASA_TOKEN = os.getenv('NASA_TOKEN')
+def fetch_nasa_epic_last_launch(token, number_links=1):
     url = 'https://api.nasa.gov/EPIC/api/natural/images'
-    params = {'api_key': NASA_TOKEN}
+    params = {'api_key': token}
     response = requests.get(url, params=params)
     response.raise_for_status()
     links = []
@@ -60,14 +58,13 @@ def fetch_nasa_epic_last_launch(number_links=1):
     for namedate in response.json():
         image = namedate['image']
         links.append(
-            f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={NASA_TOKEN}')
+            f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={token}')
         if len(links) >= number_links:
             return links
 
 
-def publish_images_to_channel(chat_id, path, time_sleep=86400):
-    TG_TOKEN = os.getenv('TG_TOKEN')
-    bot = telegram.Bot(token=TG_TOKEN)
+def publish_images_to_channel(token, chat_id, path, time_sleep=86400):
+    bot = telegram.Bot(token=token)
     for img in os.listdir(path):
         bot.send_document(chat_id=chat_id, document=open(
             f'images/{img}', 'rb'), caption='')
