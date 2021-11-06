@@ -8,7 +8,7 @@ import telegram
 import time
 
 
-def get_filename_extension(urls):
+def get_file_extension(urls):
     url = urlsplit(urls)
     path, filename_extension = os.path.splitext(url.path)
     return filename_extension
@@ -23,7 +23,7 @@ def upload_images(urls, path, name_image):
     for id, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
-        filename_extension = get_filename_extension(url)
+        filename_extension = get_file_extension(url)
         with open(f'{path}/{name_image}{id+1}{filename_extension}', 'wb') as file:
             file.write(response.content)
 
