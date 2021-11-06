@@ -1,4 +1,5 @@
-# Programs Upload photos of space to Telegram
+# Program to download photos of space to Telegram
+
 The script allows you to download photos of space from [NASA](https://www.nasa.gov/) and [Spacex](https://www.spacex.com/) sites using their open API and automatically publish them on Telegram
 ### How to install
 To authorize, you must obtain a TOKEN, you can obtain it from this site [Telegram](https://romua1d.ru/en/how-to-get-token-for-telegram-bot/) and [NASA](https://api.nasa.gov/). Token must be saved to `.env` file
