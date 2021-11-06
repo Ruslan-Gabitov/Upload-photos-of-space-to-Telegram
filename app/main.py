@@ -48,7 +48,7 @@ def fetch_nasa_last_launch(image_namber=30):
     return links
 
 
-def fetch_nasa_epic_last_launch():
+def fetch_nasa_epic_last_launch(number_links=1):
     NASA_TOKEN = os.getenv('NASA_TOKEN')
     url = 'https://api.nasa.gov/EPIC/api/natural/images'
     params = {'api_key': NASA_TOKEN}
@@ -61,7 +61,8 @@ def fetch_nasa_epic_last_launch():
         image = namedate['image']
         links.append(
             f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={NASA_TOKEN}')
-    return links
+        if len(links) >= number_links:
+            return links
 
 
 def publish_images_to_channel(chat_id, path, time_sleep=86400):
