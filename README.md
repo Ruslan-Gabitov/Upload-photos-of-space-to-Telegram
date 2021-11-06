@@ -20,3 +20,6 @@ Then use `pip` (or `pip3`, if there is a conflict with Python2) to install depen
 pip install -r requirements.txt
 ```
 Run the file `main.py`.
+```
+$ python3 main.py
+```
