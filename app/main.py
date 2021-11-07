@@ -18,11 +18,11 @@ def get_file_extension(urls):
 
 def upload_images(urls, path):
     Path(path).mkdir(parents=True, exist_ok=True)
-    for id, url in enumerate(urls):
+    for ids, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
         filename, extension = get_file_extension(url)
-        with open(f'{path}/{filename}{id+1}{extension}', 'wb') as file:
+        with open(f'{path}/{filename}{ids+1}{extension}', 'wb') as file:
             file.write(response.content)
 
 
@@ -92,3 +92,10 @@ if __name__ == '__main__':
     publish_images_to_channel(tg_token, chat_id=chat_id, path='images', time_sleep=int(time_sleep))
     # except ConnectionError:
     #     print('Ошибка соединения с сервером, попробуй еще раз.')
+        publish_images_to_channel(token=tg_token, chat_id=chat_id, path='images', time_sleep=int(time_sleep))
+    except ConnectionError:
+        print('Ошибка соединения с сервером, попробуй еще раз.')
+
+    
+
+    
