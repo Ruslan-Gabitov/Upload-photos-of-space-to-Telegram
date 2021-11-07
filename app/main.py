@@ -21,8 +21,8 @@ def upload_images(urls, path):
     for id, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
-        filename_extension = get_file_extension(url)
-        with open(f'{path}/{name_image}{id+1}{filename_extension}', 'wb') as file:
+        filename, extension = get_file_extension(url)
+        with open(f'{path}/{filename}{id+1}{extension}', 'wb') as file:
             file.write(response.content)
 
 
