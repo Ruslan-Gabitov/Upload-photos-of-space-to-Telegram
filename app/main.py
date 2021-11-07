@@ -16,7 +16,7 @@ def get_file_extension(urls):
 
 
 
-def upload_images(urls, path):
+def download_images(urls, path):
     for ids, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
@@ -25,7 +25,7 @@ def upload_images(urls, path):
             file.write(response.content)
 
 
-def fetch_spacex_last_launch(flight_number=85):
+def get_certain_start_images_spacex(flight_number=85):
     url = 'https://api.spacexdata.com/v3/launches/'
     params = {'flight_number': flight_number}
     response = requests.get(url, params=params)
@@ -34,7 +34,7 @@ def fetch_spacex_last_launch(flight_number=85):
     return links
 
 
-def fetch_nasa_last_launch(token, image_namber=30):
+def get_certain_number_images_space_nasa(token, image_namber=30):
     url = 'https://api.nasa.gov/planetary/apod'
     params = {'api_key': token, 'count': image_namber}
     response = requests.get(url, params=params)
@@ -44,7 +44,7 @@ def fetch_nasa_last_launch(token, image_namber=30):
     return links
 
 
-def fetch_nasa_epic_last_launch(token, links_number=1):
+def get_certain_number_images_space_nasa_epic(token, links_number=1):
     url = 'https://api.nasa.gov/EPIC/api/natural/images'
     params = {'api_key': token}
     response = requests.get(url, params=params)
