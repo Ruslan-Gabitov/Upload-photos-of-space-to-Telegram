@@ -3,15 +3,16 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 from urllib.parse import urlsplit
+from urllib.parse import unquote
 import datetime
 import telegram
 import time
 
 
 def get_file_extension(urls):
-    url = urlsplit(urls)
-    path, filename_extension = os.path.splitext(url.path)
-    return filename_extension
+    path, filename_extension = os.path.split(urlsplit(urls).path)
+    filename, extension = os.path.splitext(filename_extension)
+    return unquote(filename), extension
 
 
 def create_folder(path):
