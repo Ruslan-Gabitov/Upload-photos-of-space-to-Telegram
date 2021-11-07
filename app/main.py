@@ -15,9 +15,6 @@ def get_file_extension(urls):
     return unquote(filename), extension
 
 
-def create_folder(path):
-    Path(path).mkdir(parents=True, exist_ok=True)
-
 
 def upload_images(urls, path, name_image):
     create_folder(path)
