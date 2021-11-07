@@ -16,8 +16,8 @@ def get_file_extension(urls):
 
 
 
-def upload_images(urls, path, name_image):
-    create_folder(path)
+def upload_images(urls, path):
+    Path(path).mkdir(parents=True, exist_ok=True)
     for id, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
