@@ -17,7 +17,6 @@ def get_file_extension(urls):
 
 
 def upload_images(urls, path):
-    Path(path).mkdir(parents=True, exist_ok=True)
     for ids, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
@@ -86,6 +85,7 @@ if __name__ == '__main__':
     #     print('Ошибка соединения с сервером, попробуй еще раз.')
     
     # full_list_links = links_spacex + links_nasa + links_nasa_epic
+    Path('images').mkdir(parents=True, exist_ok=True)
 
     # upload_images(urls=full_list_links, path='images', name_image='image_space_')
     # try:
