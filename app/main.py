@@ -44,7 +44,7 @@ def fetch_nasa_last_launch(token, image_namber=30):
     return links
 
 
-def fetch_nasa_epic_last_launch(token, number_links=1):
+def fetch_nasa_epic_last_launch(token, links_number=1):
     url = 'https://api.nasa.gov/EPIC/api/natural/images'
     params = {'api_key': token}
     response = requests.get(url, params=params)
@@ -56,23 +56,23 @@ def fetch_nasa_epic_last_launch(token, number_links=1):
         image = namedate['image']
         links.append(
             f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={token}')
-        if len(links) >= number_links:
+        if len(links) >= links_number:
             return links
 
 
-def publish_images_to_channel(token, chat_id, path, time_sleep=86400):
+def publish_images_to_channel(token, chat_id, path, sleep_time=86400):
     bot = telegram.Bot(token=token)
     for img in os.listdir(path):
         bot.send_document(chat_id=chat_id, document=open(
             f'images/{img}', 'rb'), caption='')
-        time.sleep(time_sleep)
+        time.sleep(sleep_time)
 
 
 if __name__ == '__main__':
     load_dotenv()
     nasa_token = os.getenv('NASA_TOKEN')
     tg_token = os.getenv('TG_TOKEN')
-    time_sleep = os.getenv('TIME_SLEEP')
+    sleep_time = os.getenv('TIME_SLEEP')
     chat_id = os.getenv('CHAT_ID')
 
     # try:
