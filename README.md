@@ -3,7 +3,7 @@ The script allows you to download photos of space from [NASA](https://www.nasa.g
 ### How to install
 To authorize, you must obtain a TOKEN, you can obtain it from this site [Telegram](https://romua1d.ru/en/how-to-get-token-for-telegram-bot/) and [NASA](https://api.nasa.gov/). Token must be saved to `.env` file.
 
-*Note that variables must be named exactly as in the example, and tokens after the sign are equally written without spaces*
+*Note that variables must be named exactly as in the example, and tokens after the sign are equally written without spaces.*
 ```
 NASA_TOKEN=your token
 TG_TOKEN=your token
