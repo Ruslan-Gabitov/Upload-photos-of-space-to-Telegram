@@ -15,9 +15,9 @@ def split_file_name_and_extension(url):
     return unquote(file), extension
 
 
-def download_images(urls, path):
+def download_images(urls, path, params={'': ''}):
     for number, url in enumerate(urls, start=1):
-        response = requests.get(url)
+        response = requests.get(url, params=params)
         response.raise_for_status()
         file, extension = split_file_name_and_extension(url)
         with open(f'{path}/{file}{number}{extension}', 'wb') as file:
@@ -55,9 +55,10 @@ def get_nasa_epic_images(token, links_amount=1):
     for namedate in namedates:
         image = namedate['image']
         links.append(
-            f'https://api.nasa.gov/EPIC/archive/natural/{formatted_date}/png/{image}.png?api_key={token}')
+            f'https://api.nasa.gov/EPIC/archive/natural/{formatted_date}/png/{image}.png')
         if len(links) >= links_amount:
             return links
+
 
 
 def publish_images_to_channel(token, chat_id, path, sleep_time=86400):
@@ -83,8 +84,10 @@ if __name__ == '__main__':
     #     print('Что-то пошло не так =(, попробуй еще раз.')
     # except ConnectionError:
     #     print('Ошибка соединения с сервером, попробуй еще раз.')
+    params = {'api_key': nasa_token}
     
-    # full_list_links = links_spacex + links_nasa + links_nasa_epic
+    full_list_links = links_spacex + links_nasa
+
     Path('images').mkdir(parents=True, exist_ok=True)
 
     # upload_images(urls=full_list_links, path='images', name_image='image_space_')
