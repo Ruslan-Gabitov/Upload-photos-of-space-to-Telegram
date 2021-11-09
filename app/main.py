@@ -11,8 +11,8 @@ import time
 
 def get_file_extension(urls):
     path, filename_extension = os.path.split(urlsplit(urls).path)
-    filename, extension = os.path.splitext(unquote(filename_extension))
-    return unquote(filename), extension
+    file, extension = os.path.splitext(unquote(filename_extension))
+    return unquote(file), extension
 
 
 
@@ -20,8 +20,8 @@ def download_images(urls, path):
     for ids, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
-        filename, extension = get_file_extension(url)
-        with open(f'{path}/{filename}{ids+1}{extension}', 'wb') as file:
+        file, extension = get_file_extension(url)
+        with open(f'{path}/{file}{ids+1}{extension}', 'wb') as file:
             file.write(response.content)
 
 
@@ -34,9 +34,9 @@ def get_certain_start_images_spacex(flight_number=85):
     return links
 
 
-def get_certain_number_images_space_nasa(token, image_namber=30):
+def get_certain_number_images_space_nasa(token, image_amount=30):
     url = 'https://api.nasa.gov/planetary/apod'
-    params = {'api_key': token, 'count': image_namber}
+    params = {'api_key': token, 'count': image_amount}
     response = requests.get(url, params=params)
     response.raise_for_status()
     urls = response.json()
@@ -44,19 +44,19 @@ def get_certain_number_images_space_nasa(token, image_namber=30):
     return links
 
 
-def get_certain_number_images_space_nasa_epic(token, links_number=1):
+def get_certain_number_images_space_nasa_epic(token, links_amount=1):
     url = 'https://api.nasa.gov/EPIC/api/natural/images'
     params = {'api_key': token}
     response = requests.get(url, params=params)
     response.raise_for_status()
     links = []
     date, times = response.json()[0]['date'].split(' ')
-    aDate = datetime.date.fromisoformat(date).strftime("%Y/%m/%d")
+    formatted_date = datetime.date.fromisoformat(date).strftime("%Y/%m/%d")
     for namedate in response.json():
         image = namedate['image']
         links.append(
-            f'https://api.nasa.gov/EPIC/archive/natural/{aDate}/png/{image}.png?api_key={token}')
-        if len(links) >= links_number:
+            f'https://api.nasa.gov/EPIC/archive/natural/{formatted_date}/png/{image}.png?api_key={token}')
+        if len(links) >= links_amount:
             return links
 
 
