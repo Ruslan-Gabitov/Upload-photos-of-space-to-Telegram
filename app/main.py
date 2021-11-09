@@ -24,12 +24,11 @@ def download_images(urls, path, params={'': ''}):
             file.write(response.content)
 
 
-def get_spacex_images(flight_number=85):
-    url = 'https://api.spacexdata.com/v3/launches/'
-    params = {'flight_number': flight_number}
-    response = requests.get(url, params=params)
+def get_spacex_images(flight_number=83):
+    url = f'https://api.spacexdata.com/v3/launches/{flight_number}'
+    response = requests.get(url)
     response.raise_for_status()
-    links = response.json()[0]['links']['flickr_images']
+    links = response.json()['links']['flickr_images']
     return links
 
 
