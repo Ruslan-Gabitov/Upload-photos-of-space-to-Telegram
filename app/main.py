@@ -96,6 +96,8 @@ if __name__ == '__main__':
         publish_images_to_channel(token=tg_token, chat_id=chat_id, path='images', time_sleep=int(time_sleep))
     except ConnectionError:
         print('Ошибка соединения с сервером, попробуй еще раз.')
+    except requests.exceptions.ConnectionError:
+        print('Привышен лимит запросов')
 
     
 
