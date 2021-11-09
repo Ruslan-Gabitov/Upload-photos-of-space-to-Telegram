@@ -59,13 +59,12 @@ def get_nasa_epic_images(token, links_amount=1):
             return links
 
 
-
 def publish_images_to_channel(token, chat_id, path, sleep_time=86400):
     bot = telegram.Bot(token=token)
     for img in os.listdir(path):
-        bot.send_document(chat_id=chat_id, document=open(
-            f'images/{img}', 'rb'), caption='')
-        time.sleep(sleep_time)
+        with open(f'images/{img}', 'rb') as document:
+            bot.send_document(chat_id=chat_id, document=document, caption='')
+            time.sleep(sleep_time)
 
 
 if __name__ == '__main__':
