@@ -17,7 +17,7 @@ def split_file_name_and_extension(url):
 
 
 def download_images(urls, path):
-    for number, url in enumerate(urls):
+    for number, url in enumerate(urls, start=1):
         response = requests.get(url)
         response.raise_for_status()
         file, extension = split_file_name_and_extension(url)
