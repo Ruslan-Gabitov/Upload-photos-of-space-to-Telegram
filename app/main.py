@@ -11,7 +11,7 @@ import time
 
 def get_file_extension(urls):
     path, filename_extension = os.path.split(urlsplit(urls).path)
-    filename, extension = os.path.splitext(filename_extension)
+    filename, extension = os.path.splitext(unquote(filename_extension))
     return unquote(filename), extension
 
 
@@ -98,4 +98,4 @@ if __name__ == '__main__':
 
     
 
-    
+
