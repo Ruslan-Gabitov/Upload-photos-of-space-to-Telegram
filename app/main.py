@@ -86,7 +86,7 @@ if __name__ == '__main__':
     #     print('Ошибка соединения с сервером, попробуй еще раз.')
     params = {'api_key': nasa_token}
     
-    full_list_links = links_spacex + links_nasa
+    full_links = links_spacex + links_nasa
 
     Path('images').mkdir(parents=True, exist_ok=True)
 
