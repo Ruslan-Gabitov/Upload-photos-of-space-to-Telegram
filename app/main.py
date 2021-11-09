@@ -15,7 +15,6 @@ def split_file_name_and_extension(url):
     return unquote(file), extension
 
 
-
 def download_images(urls, path):
     for number, url in enumerate(urls, start=1):
         response = requests.get(url)
@@ -52,7 +51,8 @@ def get_nasa_epic_images(token, links_amount=1):
     links = []
     date, time = response.json()[0]['date'].split(' ')
     formatted_date = datetime.date.fromisoformat(date).strftime("%Y/%m/%d")
-    for namedate in response.json():
+    namedates = response.json()
+    for namedate in namedates:
         image = namedate['image']
         links.append(
             f'https://api.nasa.gov/EPIC/archive/natural/{formatted_date}/png/{image}.png?api_key={token}')
