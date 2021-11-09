@@ -9,19 +9,19 @@ import telegram
 import time
 
 
-def split_file_name_and_extension(urls):
-    path, filename_extension = os.path.split(urlsplit(urls).path)
+def split_file_name_and_extension(url):
+    path, filename_extension = os.path.split(urlsplit(url).path)
     file, extension = os.path.splitext(unquote(filename_extension))
     return unquote(file), extension
 
 
 
 def download_images(urls, path):
-    for ids, url in enumerate(urls):
+    for number, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
         file, extension = split_file_name_and_extension(url)
-        with open(f'{path}/{file}{ids+1}{extension}', 'wb') as file:
+        with open(f'{path}/{file}{number+1}{extension}', 'wb') as file:
             file.write(response.content)
 
 
@@ -50,7 +50,7 @@ def get_certain_number_images_space_nasa_epic(token, links_amount=1):
     response = requests.get(url, params=params)
     response.raise_for_status()
     links = []
-    date, times = response.json()[0]['date'].split(' ')
+    date, time = response.json()[0]['date'].split(' ')
     formatted_date = datetime.date.fromisoformat(date).strftime("%Y/%m/%d")
     for namedate in response.json():
         image = namedate['image']
