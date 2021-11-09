@@ -9,7 +9,7 @@ import telegram
 import time
 
 
-def get_file_extension(urls):
+def split_file_name_and_extension(urls):
     path, filename_extension = os.path.split(urlsplit(urls).path)
     file, extension = os.path.splitext(unquote(filename_extension))
     return unquote(file), extension
@@ -20,7 +20,7 @@ def download_images(urls, path):
     for ids, url in enumerate(urls):
         response = requests.get(url)
         response.raise_for_status()
-        file, extension = get_file_extension(url)
+        file, extension = split_file_name_and_extension(url)
         with open(f'{path}/{file}{ids+1}{extension}', 'wb') as file:
             file.write(response.content)
 
